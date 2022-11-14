@@ -31,7 +31,7 @@ public:
 
 	TDynamicQueue(const TDynamicQueue& q)
 	{
-		sz = v.sz;
+		sz = q.sz;
 		pMem = new T[sz];
 		head = pMem;
 		tail = pMem + 1;
