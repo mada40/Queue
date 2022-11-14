@@ -1,6 +1,17 @@
-#include "tmatrix.h"
+#include "tqueue.h"
 
 #include <gtest.h>
+
+TEST(TDynamicQueue, can_create_matrix_with_positive_length)
+{
+	TDynamicQueue<int> q;
+	for (int i = 0; i < 10; ++i)
+	{
+		q.push(i * 2 + 25);
+	}
+}
+
+/*
 
 TEST(TDynamicMatrix, can_create_matrix_with_positive_length)
 {
@@ -174,6 +185,7 @@ TEST(TDynamicMatrix, can_multiply_matrices_with_equal_size)
 	res[0][0] = 19; res[0][1] = -10;
 	res[1][0] = 43; res[1][1] = -14;
 	EXPECT_EQ(m1 * m2, res);
+
 }
 
-
+*/
