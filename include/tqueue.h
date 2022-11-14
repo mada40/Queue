@@ -13,7 +13,7 @@ class TDynamicQueue
 {
 
 protected:
-	const double COEFF = 2;
+	static const int COEFF = 2;
 	size_t sz;
 	size_t memSize;
 	T* pMem;
@@ -108,6 +108,7 @@ public:
 	{ 
 		if (sz == 0)
 			out_of_range("queue is empty");
+
 		head = pMem + (head - pMem + 1) % memSize;
 		sz--; 
 	}
@@ -121,9 +122,10 @@ public:
 			T* tmp = new T[newSize];
 			memSize = newSize;
 			std::copy(pMem, pMem + sz, tmp);
+			delete pMem;
 			pMem = tmp;
 			head = pMem;
-			tail = pMem + 1;
+			tail = pMem + sz;
 		}
 
 		*tail = el;
