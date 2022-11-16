@@ -5,9 +5,10 @@ template<typename T>
 class TDynamicQueue
 {
 
+	//комментарий
 protected:
-	size_t sz;
-	size_t memSize;
+	int sz;
+	int memSize;
 	T* pMem;
 	T* head, *tail;
 
@@ -53,18 +54,18 @@ public:
 		return *this;
 	}
 
-	size_t size() const noexcept { return sz; }
-	size_t capacity() const noexcept{ return memSize; }
+	int size() const noexcept { return sz; }
+	int capacity() const noexcept{ return memSize; }
 	bool empty() const noexcept { return sz == 0; }
 
 	
-	// сравнение
+	///// сравнение
 	bool operator==(const TDynamicQueue& v) const noexcept
 	{
 		if (sz != v.sz)
 			return false;
 
-		for (size_t i = 0; i < sz; i++)
+		for (int i = 0; i < sz; i++)
 		{
 			if (pMem[i] != v.pMem[i])
 				return false;
@@ -98,7 +99,7 @@ public:
 
 		if (tail == head)
 		{
-			size_t newSize = (memSize + 1) * COEFF;
+			int newSize = (memSize + 1) * COEFF;
 			T* tmp = new T[newSize];
 			memSize = newSize;
 			std::copy(pMem, pMem + sz, tmp);
