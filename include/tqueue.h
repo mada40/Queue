@@ -1,9 +1,6 @@
 ﻿#ifndef __TDynamicMatrix_H__
 #define __TDynamicMatrix_H__
 
-using namespace std;
-
-
 template<typename T>
 class TDynamicQueue
 {
@@ -83,14 +80,14 @@ public:
 	T front() const
 	{
 		if (sz == 0)
-			throw out_of_range("queue is empty");
+			throw std::out_of_range("queue is empty");
 
 		return *head;
 	}
 	void pop() 
 	{ 
 		if (sz == 0)
-			throw out_of_range("queue is empty");
+			throw std::out_of_range("queue is empty");
 
 		head = pMem + (head - pMem + 1) % memSize;
 		sz--; 
