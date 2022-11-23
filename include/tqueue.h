@@ -1,6 +1,10 @@
 ﻿#ifndef __TDynamicMatrix_H__
 #define __TDynamicMatrix_H__
 
+#include<algorithm>
+#include<stdexcept>
+
+
 template<typename T>
 class TDynamicQueue
 {
