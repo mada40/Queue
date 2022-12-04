@@ -1,6 +1,6 @@
 #include "tqueue.h"
-
 #include <gtest.h>
+#include <queue>
 
 TEST(TDynamicQueue, can_create)
 {
@@ -116,4 +116,76 @@ TEST(TDynamicQueue, loop_1push1pop_after_100pop)
 	EXPECT_LE(q.capacity(), N * q.COEFF);
 }
 
+TEST(TDynamicQueue, new_capacity_approximately_equal_to_old_capacityCOEFF)
+{
+	TDynamicQueue<int> q;
+	const int N = 100;
+	for (int i = 0; i < N; i++)
+	{
+		q.push(i - 100);
+	}
+
+	for (int i = 0; i < N / 2; i++)
+	{
+		q.pop();
+	}
+
+	int el = 50;
+	while (q.size() < q.capacity())
+	{
+		q.push(el++);
+	}
+	int oldCapacity = q.capacity();
+	q.push(0);
+	EXPECT_LE(abs(q.capacity() - oldCapacity * q.COEFF), 2);
+}
+
+TEST(TDynamicQueue, pop_operations_lay_out_the_necessary_elements)
+{
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int N = 100;
+	for (int i = 0; i < N; i++)
+	{
+		q.push(i - 100);
+		control.push(i - 100);
+	}
+
+	while(!q.empty())
+	{
+		EXPECT_EQ(q.front(), control.front());
+		q.pop();
+		control.pop();
+	}
+}
+
+TEST(TDynamicQueue, N_push_operations_do_not_cause_repacking)
+{
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int K = 100;
+	for (int i = 0; i < K; i++)
+	{
+		q.push(i - 100);
+		control.push(i - 100);
+	}
+	int M = 47;
+	for (int i = 0; i < M; i++)
+	{
+		q.pop();
+	}
+	int el = 50;
+	while (q.size() < q.capacity())
+	{
+		q.push(el++);
+	}
+	int oldCapacity = q.capacity();
+	q.push(0);
+	int newCapacity = q.capacity();
+	for (int i = 0; i <= oldCapacity; i++)
+	{
+		q.push(i * i);
+	}
+	EXPECT_EQ(newCapacity, q.capacity());
+}
 
