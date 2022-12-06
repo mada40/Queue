@@ -189,3 +189,39 @@ TEST(TDynamicQueue, N_push_operations_do_not_cause_repacking)
 	EXPECT_EQ(newCapacity, q.capacity());
 }
 
+class Fixture : public ::testing::Test 
+{
+public:
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int N = 1e3 + 8;
+	Fixture()
+	{
+		for (int i = 0; i < N; i++)
+		{
+			control.push(i + 105 * i * i);
+			q.push(i + 105 * i * i);
+		}
+	}
+};
+
+TEST_F(Fixture, test_name1)
+{
+	EXPECT_EQ(q.size(), N);
+}
+
+TEST_F(Fixture, test_name2)
+{
+	while (!control.empty())
+	{
+		EXPECT_EQ(q.front(), control.front());
+		q.pop();
+		control.pop();
+	}
+}
+
+TEST_F(Fixture, test_name3)
+{
+	q.pop();
+	EXPECT_NE(q.size(), N);
+}
