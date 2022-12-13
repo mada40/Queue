@@ -225,3 +225,44 @@ TEST_F(Fixture, test_name3)
 	q.pop();
 	EXPECT_NE(q.size(), N);
 }
+
+TEST(TDynamicQueue, test555)
+{
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int N = 5;
+	for (int i = 0; i < N; i++)
+	{
+		q.push(i - 100);
+		control.push(i - 100);
+	}
+	int el = 666;
+	while (q.size() != q.capacity())
+	{
+		q.push(el * el - 100);
+		control.push(el * el - 100);
+		el += 7;
+	}
+
+	for (int i = 0; i < q.capacity() / 2; i++)
+	{
+		q.pop();
+		control.pop();
+	}
+
+	while (q.size() != q.capacity())
+	{
+		q.push(el * el - 100);
+		control.push(el * el - 100);
+		el += 7;
+	}
+
+	q.push(-2);
+	control.push(-2);
+	while (!q.empty())
+	{
+		EXPECT_EQ(q.front(), control.front());
+		q.pop();
+		control.pop();
+	}
+}
