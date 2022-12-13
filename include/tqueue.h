@@ -106,7 +106,10 @@ public:
 			int newSize = (memSize + 1) * COEFF;
 			T* tmp = new T[newSize];
 			memSize = newSize;
-			std::copy(pMem, pMem + sz, tmp);
+			for (int i = 0; i < sz; i++)
+			{
+				tmp[i] = *(pMem + (head - pMem + i) % memSize);
+			}
 			if(pMem) delete[] pMem;
 			pMem = tmp;
 			head = pMem;
