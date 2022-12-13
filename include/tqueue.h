@@ -108,8 +108,9 @@ public:
 			memSize = newSize;
 			for (int i = 0; i < sz; i++)
 			{
-				tmp[i] = *(pMem + (head - pMem + i) % memSize);
+				tmp[i] = *(pMem + (head - pMem + i) % sz);
 			}
+			//std::copy(pMem, pMem + sz, tmp);
 			if(pMem) delete[] pMem;
 			pMem = tmp;
 			head = pMem;
