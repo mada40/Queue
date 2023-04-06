@@ -59,7 +59,7 @@ TEST(TDynamicQueue, can_create_copied_queue)
 	ASSERT_NO_THROW(TDynamicQueue<int> q1(q));
 }
 
-TEST(TDynamicQueue, copied_matrix_is_equal_to_source_one)
+TEST(TDynamicQueue, copied_queue_is_equal_to_source_one)
 {
 	TDynamicQueue<int> q;
 	q.push(580);
