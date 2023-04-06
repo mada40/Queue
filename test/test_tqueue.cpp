@@ -59,7 +59,7 @@ TEST(TDynamicQueue, can_create_copied_queue)
 	ASSERT_NO_THROW(TDynamicQueue<int> q1(q));
 }
 
-TEST(TDynamicQueue, copied_matrix_is_equal_to_source_one)
+TEST(TDynamicQueue, copied_queue_is_equal_to_source_one)
 {
 	TDynamicQueue<int> q;
 	q.push(580);
@@ -189,3 +189,80 @@ TEST(TDynamicQueue, N_push_operations_do_not_cause_repacking)
 	EXPECT_EQ(newCapacity, q.capacity());
 }
 
+class Fixture : public ::testing::Test 
+{
+public:
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int N = 1e3 + 8;
+	Fixture()
+	{
+		for (int i = 0; i < N; i++)
+		{
+			control.push(i + 105 * i * i);
+			q.push(i + 105 * i * i);
+		}
+	}
+};
+
+TEST_F(Fixture, test_name1)
+{
+	EXPECT_EQ(q.size(), N);
+}
+
+TEST_F(Fixture, test_name2)
+{
+	while (!control.empty())
+	{
+		EXPECT_EQ(q.front(), control.front());
+		q.pop();
+		control.pop();
+	}
+}
+
+TEST_F(Fixture, test_name3)
+{
+	q.pop();
+	EXPECT_NE(q.size(), N);
+}
+
+TEST(TDynamicQueue, test555)
+{
+	TDynamicQueue<int> q;
+	std::queue<int> control;
+	const int N = 5;
+	for (int i = 0; i < N; i++)
+	{
+		q.push(i - 100);
+		control.push(i - 100);
+	}
+	int el = 666;
+	while (q.size() != q.capacity())
+	{
+		q.push(el * el - 100);
+		control.push(el * el - 100);
+		el += 7;
+	}
+
+	for (int i = 0; i < q.capacity() / 2; i++)
+	{
+		q.pop();
+		control.pop();
+	}
+
+	while (q.size() != q.capacity())
+	{
+		q.push(el * el - 100);
+		control.push(el * el - 100);
+		el += 7;
+	}
+
+	q.push(-2);
+	control.push(-2);
+	while (!q.empty())
+	{
+		EXPECT_EQ(q.front(), control.front());
+		q.pop();
+		control.pop();
+	}
+}
